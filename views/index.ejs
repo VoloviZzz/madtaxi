@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" >
+<meta name="viewport" content="width=device-width, user-scalable=no, maximum-scale=0.7">
+<meta http-equiv="Cache-Control" content="no-cache">
+<head>
+  <meta charset="UTF-8">
+  <title>MadTAXI</title>
+
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"> -->
+
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=VT323'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Orbitron:500'>
+
+      <link rel="stylesheet" href="css/style.css">
+			<audio id="music" loop src="music/The Offspring - All I Want.mp3"></audio>
+
+</head>
+
+<body>
+  <!-- <div class="page"> -->
+    <div class="controls">
+			<div class="rotatePhone"><img src="img/rotatePhone.png" alt=""></div>
+			<div class="loader">
+				<div class="circul">
+
+				</div>
+			</div>
+
+      <div class="left"><span>LEFT</span></div>
+      <div class="right"><span>RIGHT</span></div>
+      <div class="up"><span>UP</span></div>
+      <div class="down"><span>DOWN</span></div>
+    </div>
+			<div class="wall-bg">
+				<ul>
+					<li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
+				</ul>
+				<div class="wall-poster">
+					<h1>wanna <span>cash?</span></h1>
+					<i class="mr-akabei">
+						<div class="mr-akabei-content">
+							<span class="mr-akabei-eye-first" onclick="music_toggle(this)">
+								<div class="line"></div>
+								<img src="img/95159_music_512x512.png" alt="">
+							</span>
+							<span class="mr-akabei-eye-second" onclick="sound_toggle(this)">
+								<div class="line"></div>
+								<img src="img/708982_music_512x512.png" alt="">
+							</span>
+							<span class="mr-akabei-bottom-1"></span>
+							<span class="mr-akabei-bottom-2"></span>
+							<span class="mr-akabei-bottom-3"></span>
+							<span class="mr-akabei-bottom-4"></span>
+							<span class="mr-akabei-bottom-5"></span>
+							<span class="mr-akabei-bottom-6"></span>
+							<span class="mr-akabei-bottom-7"></span>
+						</div>
+						<i class="point-first"></i>
+						<i class="point-second"></i>
+						<i class="point-third"></i>
+						<i class="point-four"></i>
+						<i class="point-last"></i>
+					</i>
+					<i class="mr-pacman">
+						<i class="point-first"></i>
+						<i class="point-second"></i>
+						<i class="point-third"></i>
+						<i class="point-four"></i>
+					</i>
+					<span onclick="show_shop(this);">shop?</span>
+				</div>
+				<div class="wall-desk">
+					<div class="timer">
+						<i class="timer-shadow"></i>
+						<div class="timer-content">
+							<div class="timer-hr">
+								<div class="timer-digits"></div>
+							</div>
+							<i class="timer-hr-right"></i>
+						</div>
+						<i class="timer-right"></i>
+						<i class="timer-hr-first"></i>
+						<i class="timer-hr-second"></i>
+						<i class="timer-hr-third"></i>
+						<i class="timer-hr-last"></i>
+					</div>
+					<i class="wall-desk-shadow"></i>
+					<i class="wall-desk-bottom"></i>
+					<i class="wall-desk-front"></i>
+					<i class="wall-desk-right"></i>
+				</div>
+			</div>
+			<div class="floor-bg"><div class="floor-hr"><i></i></div></div>
+
+			<div class="tv-content">
+				<div class="tv">
+					<div class="tv-top"><i class="item-left"></i><i class="item-right"></i></div>
+					<div class="tv-shadow"></div>
+					<div class="tv-right"></div>
+					<div class="tv-bottom">
+						<ul><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>
+						<i></i>
+					</div>
+					<div class="tv-screen">
+						<div class="gameStop" onclick="G.gameOver()">
+							<img src="img/seo-social-web-network-internet_322_icon-icons.com_61532.png" alt="">
+						</div>
+						<a href="" class="pw-btn"></a>
+						<div class="tv-hr">
+							<div class="tv-hr-2">
+								<div class="tv-hr-3">
+									<div class="tv-glass">
+										<div onclick="start(this);" class="start">
+											<span>START</span>
+										</div>
+										<canvas></canvas>
+										<div class="tv-glass-vintage">
+											<ul><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>
+
+											<i class="tv-noise"></i><i class="tv-noise-second"></i>
+											<i class="tv-glow"></i>
+										</div>
+									</div>
+									<div class="tv-flashing">
+										<i class="tv-flashing-left"></i>
+										<i class="tv-flashing-bottom"></i>
+										<i class="tv-flashing-bottom-placeholder"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="shop-list">
+					<div class="shop-item">
+						<img src="img/map1.png" alt="">
+						<img src="img/unnamed.png" alt="" style="display:none">
+					</div>
+					<div class="shop-item black">
+						<img src="img/map1.png" alt="">
+						<img src="img/unnamed.png" alt="">
+					</div>
+					<div class="shop-item black">
+						<img src="img/map1.png" alt="">
+						<img src="img/unnamed.png" alt="">
+					</div>
+				</div>
+				<div class="tv-desk">
+					<i class="tv-desk-shadow"></i>
+					<i class="tv-desk-item-left-shadow"></i>
+					<i class="tv-desk-item-left"></i>
+					<i class="tv-desk-item-right-shadow"></i>
+					<i class="tv-desk-item-right"></i>
+					<i class="tv-desk-item-rear-shadow"></i>
+					<i class="tv-desk-item-rear"></i>
+					<i class="tv-desk-top"></i>
+					<i class="tv-desk-front"></i>
+					<i class="tv-desk-right"></i>
+				</div>
+			</div>
+
+			<div class="console">
+				<i class="console-shadow"></i>
+				<div class="console-top">
+					<i class="console-game-top"></i>
+					<div class="console-top-panel">
+						<i class="console-top-panel-item-1"></i>
+						<i class="console-top-panel-item-2"></i>
+						<i class="console-top-panel-item-3"></i>
+						<i class="console-top-panel-item-4"></i>
+						<i class="console-top-panel-item-5"></i>
+						<i class="console-top-panel-item-6"></i>
+						<i class="console-top-panel-item-7"></i>
+						<i class="console-top-panel-item-8"></i>
+					</div>
+				</div>
+				<i class="console-right-top"></i>
+				<i class="console-right-bottom"></i>
+				<div class="console-front-panel">
+					<div class="front-panel-top">
+						<i class="console-game"></i>
+						<i class="console-power-dark"></i>
+					</div>
+					<div class="front-panel-bottom">
+						<i class="console-power-indicator"></i>
+						<i class="console-btn-first"></i>
+						<i class="console-btn-second"></i>
+						<div class="console-power">
+							<div class="console-power-plug"><i></i></div>
+							<i class="console-power-cable"></i>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src='js/jquery-3.2.1.min.js'></script>
+  <script src='js/webaudiox.js'></script>
+	<script>
+
+
+
+	var sounds1  = new WebAudiox.GameSounds();
+	var sounds  = new WebAudiox.GameSounds();
+	var music;
+	var boom;
+	var kill;
+	var money;
+	var too_slows;
+	var gameover;
+	var swipe;
+	var music_play;
+	var music_one = sounds1.createClip({volume: 0.0, loop: true}).load('music/The Offspring - All I Want.mp3', function(soundClip){
+		$('.loader').hide(200);
+	 music = soundClip;
+	})
+	sounds.createClip().load('music/Puzzle_Destroy_Organic_Organic_02.wav', function(soundClip){
+	 kill = soundClip;
+	})
+	sounds.createClip().load('music/Explosions_Explosions_Shot_Shot_06.mp3', function(soundClip){
+	 boom = soundClip;
+	})
+	sounds.createClip().load('music/Puzzle_Stars_Stars_Stars_03_02.wav', function(soundClip){
+	 money = soundClip;
+	})
+	sounds.createClip().load('music/Puzzle_Jingle_Negative_Negative_08.wav', function(soundClip){
+	 too_slow = soundClip;
+	})
+	sounds.createClip().load('music/Puzzle_Jingle_Negative_Negative_03.wav', function(soundClip){
+	 gameover = soundClip;
+	})
+	sounds.createClip().load('music/interface_Swish_Swish_Swish_05.wav', function(soundClip){
+	 swipe = soundClip;
+	})
+	function start(e) {
+		G.restart();
+		// G.menu = null;
+		$('html').addClass('show-player');
+		$(e).hide(200);
+		$('.left').show(200);
+		$('.right').show(200);
+		$('.up').show(200);
+		$('.down').show(200);
+		$('.start').css('left', '34.5%');
+		$('.tv-screen').css('transform', 'scale(2)');
+		setTimeout(function () {
+			$('.gameStop').show(200);
+		}, 1000);
+		if (music_play) {
+			music_play.stop();
+		}
+		if (typeof music == 'undefined') {
+			setTimeout(function () {
+				music_play = music.play();
+				music_play.sourceNode.loop = true;
+				music.gameSounds.lineOut.volume  = 0.1;
+			}, 4000);
+		}else {
+			music_play = music.play();
+			music_play.sourceNode.loop = true;
+			music.gameSounds.lineOut.volume  = 0.1;
+		}
+
+
+		if (localStorage.getItem("music") == 'false') {
+			$('.mr-akabei-eye-first').find('.line').hide();
+			music.gameSounds.lineOut.volume  = 0.1;
+		}else {
+			$('.mr-akabei-eye-first').find('.line').show();
+			music.gameSounds.lineOut.volume  = 0.0;
+		}
+
+		if (localStorage.getItem("sound") == 'false') {
+			$('.mr-akabei-eye-second').find('.line').hide();
+			boom.gameSounds.lineOut.volume  = 1;
+		}else {
+			$('.mr-akabei-eye-second').find('.line').show();
+			boom.gameSounds.lineOut.volume  = 0.0;
+		}
+
+
+	}
+
+	if (localStorage.getItem("music") == 'false') {
+		$('.mr-akabei-eye-first').find('.line').hide();
+	}else {
+		$('.mr-akabei-eye-first').find('.line').show();
+	}
+
+	if (localStorage.getItem("sound") == 'false') {
+		$('.mr-akabei-eye-second').find('.line').hide();
+	}else {
+		$('.mr-akabei-eye-second').find('.line').show();
+	}
+
+
+
+
+	</script>
+
+
+
+    <script  src="js/index.js"></script>
+
+<script>
+var body = $('body')[0];
+console.log(body);
+if (body.requestFullscreen) {
+	body.requestFullscreen();
+} else if (body.webkitrequestFullscreen) {
+	body.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+} else if (body.mozrequestFullscreen) {
+	body.mozrequestFullscreen();
+} else if (body.msrequestFullscreen) {
+	body.msrequestFullscreen();
+}
+</script>
+
+
+</body>
+
+</html>
