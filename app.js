@@ -31,20 +31,20 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 
-const mysql                    = require("mysql");
-const dbSettings               = require("./db_settings.js");
+// const mysql                    = require("mysql");
+// const dbSettings               = require("./db_settings.js");
 const config                   = require("./config.js");
-const connection               = mysql.createConnection(dbSettings);
+// const connection               = mysql.createConnection(dbSettings);
 var io												 = require('socket.io').listen(3007);
 
 connection.connect();
 
 app.use(express.static(__dirname + '/client'));
-app.use(session({
-    key: 'session_cookie_name',
-    secret: 'session_cookie_secret',
-    store: new SessionStore(dbSettings)
-}));
+// app.use(session({
+//     key: 'session_cookie_name',
+//     secret: 'session_cookie_secret',
+//     store: new SessionStore(dbSettings)
+// }));
 
 
 
@@ -71,7 +71,7 @@ io.sockets.on('connection', function (client) {
 
 app.get('/', function (req, res, next) {
 
-  res.render('index');  
+  res.render('index');
     // res.render('index0');
 
 });
