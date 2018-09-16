@@ -362,6 +362,7 @@ Game.prototype = {
     gameOver: function(){
         this.menu = new End();
         gameover.play();
+        $('#wanna_cash').click();
         $('.start').show(200);
         $('.left').hide(200);
     		$('.right').hide(200);

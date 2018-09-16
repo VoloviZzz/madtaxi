@@ -85,10 +85,6 @@ app.get('/', function (req, res, next) {
 
 
 
-
-
-
-
 app.listen(config.port, (err) => {
 		if (err) return console.log("Ошибка запуска сервера:" + err.message);
 		console.log('Проект запущен на '+config.port+' порт');
