@@ -37,7 +37,7 @@ const config                   = require("./config.js");
 // const connection               = mysql.createConnection(dbSettings);
 var io												 = require('socket.io').listen(3007);
 
-connection.connect();
+// connection.connect();
 
 app.use(express.static(__dirname + '/client'));
 // app.use(session({
@@ -48,24 +48,24 @@ app.use(express.static(__dirname + '/client'));
 
 
 
-
-
-io.sockets.on('connection', function (client) {
-    client.on('message', function (message) {
-        try {
-            client.emit('message', message);
-            client.broadcast.emit('message', message);
-        } catch (e) {
-            console.log(e);
-            client.disconnect();
-        }
-    });
-		client.on('disconnect', function() {
-				var time = (new Date).toLocaleTimeString();
-				io.sockets.json.send({'event': 'userSplit', 'name': ID, 'time': time});
-			});
-
-});
+//
+//
+// io.sockets.on('connection', function (client) {
+//     client.on('message', function (message) {
+//         try {
+//             client.emit('message', message);
+//             client.broadcast.emit('message', message);
+//         } catch (e) {
+//             console.log(e);
+//             client.disconnect();
+//         }
+//     });
+// 		client.on('disconnect', function() {
+// 				var time = (new Date).toLocaleTimeString();
+// 				io.sockets.json.send({'event': 'userSplit', 'name': ID, 'time': time});
+// 			});
+//
+// });
 
 
 
