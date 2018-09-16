@@ -12,6 +12,34 @@ body{
     display: none;
   }
 }
+.shop-btns{
+  position: absolute;
+  left: 70px;
+  top: -80px;
+  width: 100%;
+  display:  flex;
+  height: 100px;
+  z-index: 3;
+}
+
+.shop-btns .shop-btn{
+  width: 40px;
+  height: 40px;
+  position: relative;
+  margin: 0px 40px 0px 0;
+  background-color: #4e3178;
+  border-radius: 50%;
+  box-shadow:  0 0 10px #000;
+}
+
+.shop-btn img{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+}
+
 .shop-list{
   position: absolute;
   left: 970px;

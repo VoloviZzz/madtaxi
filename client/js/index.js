@@ -2,6 +2,22 @@
 // JS
 $(document).ready(function() {
 
+
+  $('.shop-btn').click(function () {
+    $('.shop-btn').each(function () {
+      $(this).removeClass('black');
+    });
+    $(this).addClass('black');
+    var cat = $(this).data('cat');
+    $('.shop-item').each(function () {
+      if ($(this).hasClass(cat)) {
+        $(this).show(200);
+      }else {
+        $(this).hide(200);
+      }
+    });
+  });
+
     // TIME
     setInterval(function(){
         var dt = new Date(),
