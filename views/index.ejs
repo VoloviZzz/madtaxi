@@ -5,41 +5,35 @@
 <head>
   <meta charset="UTF-8">
   <title>MadTAXI</title>
-
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"> -->
-
-  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=VT323'>
-<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Orbitron:500'>
-
-      <link rel="stylesheet" href="css/style.css">
-			<audio id="music" loop src="music/The Offspring - All I Want.mp3"></audio>
-
+	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=VT323'>
+	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Orbitron:500'>
+	<link rel="stylesheet" href="css/style.css">
 </head>
 <script>
-// function test() {
-// 	//
-// }
-//
-// test.prototype.getGreeting = function () {
-// 	return 'AD Start';
-// }
-//
-// var test = new test();
+    var timerdigits = 1;
 </script>
 <body>
   <!-- <div class="page"> -->
     <div class="controls">
 			<div class="rotatePhone"><img src="img/rotatePhone.png" alt=""></div>
 			<div class="loader">
-				<div class="circul">
-
+				<div class="circul"></div>
+			</div>
+			<div class="toast">
+				<div class="error" onclick="$('.toast .error').hide(300)" style="display: none">
+					<div class="text">You do not have enough money to buy this car.</div>
+					<img src="img/brick_white_halt-on-brick_octagon.png" alt="">
+				</div>
+				<div class="success" style="display: none">
+					<div class="text"></div>
+					<img src="img/brick_white_halt-on-brick_octagon.png" alt="">
 				</div>
 			</div>
 
-      <div class="left"><span>LEFT</span></div>
-      <div class="right"><span>RIGHT</span></div>
-      <div class="up"><span>UP</span></div>
-      <div class="down"><span>DOWN</span></div>
+      <div class="left"><img src="img/flatDark23.png" alt=""></div>
+      <div class="right"><img src="img/flatDark24.png" alt=""></div>
+      <div class="up"><img src="img/flatDark25.png" alt=""></div>
+      <div class="down"><img src="img/flatDark26.png" alt=""></div>
     </div>
 			<div class="wall-bg">
 				<ul>
@@ -47,7 +41,7 @@
 				</ul>
 				<div class="wall-poster">
 					<!-- <h1 id="wanna_cash" onclick="javascript:alert(test.getGreeting());">wanna <span>cash?</span></h1> -->
-					<h1 id="wanna_cash" >wanna <span>cash?</span></h1>
+					<h1 id="wanna_cash" >MAD <span>TAXI</span></h1>
 					<i class="mr-akabei">
 						<div class="mr-akabei-content">
 							<span class="mr-akabei-eye-first" onclick="music_toggle(this)">
@@ -85,7 +79,12 @@
 						<i class="timer-shadow"></i>
 						<div class="timer-content">
 							<div class="timer-hr">
-								<div class="timer-digits"></div>
+								<div class="timer-digits" onclick="if (timerdigits > 1) {
+                  timerdigits--;
+                }else {
+                  timerdigits++;
+                }
+                btn.play();"></div>
 							</div>
 							<i class="timer-hr-right"></i>
 						</div>
@@ -124,12 +123,17 @@
 										<div onclick="start(this);" class="start">
 											<span>START</span>
 										</div>
+
 										<canvas></canvas>
 										<div class="tv-glass-vintage">
 											<ul><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>
 
 											<i class="tv-noise"></i><i class="tv-noise-second"></i>
 											<i class="tv-glow"></i>
+                      <div class="police-indecator" style="display: none;">
+                        <img src="img/zvezdia-517.gif" alt="">
+                        <div class="police-timer" style="display: none;">0</div>
+                      </div>
 										</div>
 									</div>
 									<div class="tv-flashing">
@@ -141,6 +145,7 @@
 							</div>
 						</div>
 					</div>
+
 				</div>
 				<div class="shop-list">
 					<div class="shop-btns">
@@ -167,18 +172,32 @@
 						<img src="img/unnamed.png" alt="">
 					</div>
 
-					<div class="car shop-item" style="display:none">
-						<img src="img/car1.png" alt="">
-						<img src="img/unnamed.png" alt="" style="display:none">
-					</div>
-					<div class="car shop-item black" style="display:none">
-						<img src="img/car1.png" alt="">
-						<img src="img/unnamed.png" alt="">
-					</div>
-					<div class="car shop-item black" style="display:none">
-						<img src="img/car1.png" alt="">
-						<img src="img/unnamed.png" alt="">
-					</div>
+					<div class="cars-list">
+            <div class="car shop-item" style="display:none">
+  						<img class="pic select" data-name="yellow" data-id="0" src="img/car1.png" alt="">
+  						<img class="block" src="img/unnamed.png" alt="" style="display:none">
+  						<div class="prise"><span>0</span>$</div>
+  						<div class="name">YaTaxi</div>
+  					</div>
+  					<div class="car shop-item black" style="display:none">
+  						<img class="pic" src="img/car2.png" data-name="black" data-id="1" alt="">
+  						<img class="block" src="img/unnamed.png" alt="">
+  						<div class="prise"><span>500</span>$ <br> +30% cash</div>
+  						<div class="name">Uber Black</div>
+  					</div>
+  					<div class="car shop-item black" data-name="white" style="display:none">
+  						<img class="pic" src="img/car3.png" data-name="lpr" data-id="2" alt="">
+  						<img class="block" src="img/unnamed.png" alt="">
+  						<div class="prise"><span>1100</span>$ <br>+30% speed <br>+50% freedom</div>
+  						<div class="name">Libertarian Car</div>
+  					</div>
+            <div class="car shop-item black" data-name="polise" style="display:none">
+  						<img class="pic" src="img/car4.png" data-name="polise" data-id="3" alt="">
+  						<img class="block" src="img/unnamed.png" alt="">
+  						<div class="prise"><span>3100</span>$ <br>+police ignore</div>
+  						<div class="name">Police Car</div>
+  					</div>
+          </div>
 
 					<div class="lock shop-item black" style="display:none">
 						<img src="img/map1.png" alt="">
@@ -255,8 +274,16 @@
 	var money;
 	var too_slows;
 	var gameover;
-	var swipe;
-	var music_play;
+  var swipe;
+  var tap;
+  var bay;
+	var btn;
+  var music_play;
+  var error;
+  var fuck_the_police;
+  var fuck_the_police2;
+  var police_wrong = false;
+
 	var music_one = sounds1.createClip({volume: 0.0, loop: true}).load('music/The Offspring - All I Want.mp3', function(soundClip){
 		$('.loader').hide(200);
 	 music = soundClip;
@@ -273,11 +300,29 @@
 	sounds.createClip().load('music/Puzzle_Jingle_Negative_Negative_08.wav', function(soundClip){
 	 too_slow = soundClip;
 	})
-	sounds.createClip().load('music/Puzzle_Jingle_Negative_Negative_03.wav', function(soundClip){
+	sounds.createClip().load('music/Puzzle_Jingle_Negative_Negative_03.mp3', function(soundClip){
 	 gameover = soundClip;
 	})
-	sounds.createClip().load('music/interface_Swish_Swish_Swish_05.wav', function(soundClip){
+  sounds.createClip().load('music/interface_Swish_Swish_Swish_05.wav', function(soundClip){
 	 swipe = soundClip;
+	})
+  sounds.createClip().load('music/interface_Extra_Voice_Voice_01.wav', function(soundClip){
+	 tap = soundClip;
+	})
+  sounds.createClip().load('music/Puzzle_Stars_Stars_Stars_03_01.wav', function(soundClip){
+	 buy = soundClip;
+	})
+  sounds.createClip().load('music/interface_Extra_Other_Organic_01.wav', function(soundClip){
+	 btn = soundClip;
+	})
+  sounds.createClip().load('music/interface_Music_Negative_Digital_03.wav', function(soundClip){
+	 error = soundClip;
+	})
+  sounds.createClip().load('music/Sound_05813.mp3', function(soundClip){
+	 fuck_the_police = soundClip;
+	})
+  sounds.createClip().load('music/Sound_05813 (1).mp3', function(soundClip){
+	 fuck_the_police2 = soundClip;
 	})
 	function start(e) {
 		G.restart();
@@ -345,23 +390,8 @@
 
 	</script>
 
+  <script  src="js/index.js"></script>
 
-
-    <script  src="js/index.js"></script>
-
-<script>
-var body = $('body')[0];
-console.log(body);
-if (body.requestFullscreen) {
-	body.requestFullscreen();
-} else if (body.webkitrequestFullscreen) {
-	body.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
-} else if (body.mozrequestFullscreen) {
-	body.mozrequestFullscreen();
-} else if (body.msrequestFullscreen) {
-	body.msrequestFullscreen();
-}
-</script>
 
 
 </body>

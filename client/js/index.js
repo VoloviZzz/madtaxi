@@ -4,6 +4,7 @@ $(document).ready(function() {
 
 
   $('.shop-btn').click(function () {
+    tap.play();
     $('.shop-btn').each(function () {
       $(this).removeClass('black');
     });
@@ -18,8 +19,11 @@ $(document).ready(function() {
     });
   });
 
+
+
     // TIME
     setInterval(function(){
+      if (timerdigits == 1) {
         var dt = new Date(),
             hours = dt.getHours(),
             minutes = dt.getMinutes();
@@ -34,9 +38,13 @@ $(document).ready(function() {
         }
 
         var time = hours + ":" + minutes;
+      }else if (timerdigits == 2) {
 
-        $('.timer-digits').html(time);
-        $('canvas').css('width', '700px')
+        var time = G.world.player.cash+'$';
+
+      }
+      $('.timer-digits').html(time);
+      $('canvas').css('width', '700px')
     }, 1000);
 
 
@@ -240,7 +248,7 @@ function createCycle(pts){
     return res[0];
 };
 
-function newCar(color, noLights){
+function newCar(color, noLights, lpr, polise, taxi){
     return cache(52, 24, function(c, r){
         with(r){
             fs('rgba(0,0,0,1)');
@@ -251,6 +259,27 @@ function newCar(color, noLights){
             fs(color);
             fr(0, 0, 50, 22);
 
+            if (taxi) {
+              fs('#000');
+              fr(18, 14, 2, 2);
+              fr(18, 10, 2, 2);
+              fr(18, 6, 2, 2);
+              fr(20, 8, 2, 2);
+              fr(20, 12, 2, 2);
+            }
+
+            if (polise) {
+              fs('#fff');
+              fr(15, 0, 15, 22);
+
+              fs('#f00');
+              fr(20, 0, 4, 11);
+
+              fs('#00f');
+              fr(20, 12, 4, 11);
+
+            }
+
             fs('#000');
             fr(10, 3, 5, 16);
             fr(30, 3, 10, 16);
@@ -258,6 +287,33 @@ function newCar(color, noLights){
             fr(23, 1, 7, 1);
             fr(15, 20, 7, 1);
             fr(23, 20, 7, 1);
+
+
+
+            if (lpr) {
+              fs('#d86d46');
+              fr(26, 7, 2, 6);
+              fr(24, 5, 2, 2);
+              fr(19, 4, 7, 2);
+
+              fs('#be9f6f');
+              fr(27, 5, 3, 3);
+              fr(25, 7, 3, 3);
+              fr(23, 9, 3, 3);
+              fr(21, 11, 3, 3);
+              fr(19, 13, 3, 3);
+              fr(17, 15, 3, 3);
+              fr(15, 17, 3, 3);
+
+              fs('#261a0a');
+              fr(16, 9, 2, 5);
+              fr(18, 14, 2, 2);
+              fr(20, 16, 5,2);
+            }
+
+
+
+
 
             if(!noLights){
                 fs('#ff0');
@@ -327,34 +383,42 @@ Game.prototype = {
         $('.left').on('touchstart', function() {
           G.world.buttonDown = 'left';
           G.world.player.rotationDir = -1;
+          $(this).find('img').css('filter', 'brightness(0.5)');
         });
         $('.left').on('touchend', function() {
           G.world.buttonDown = false;
           G.world.player.rotationDir = 0;
+          $(this).find('img').css('filter', 'brightness(1)');
         });
         $('.right').on('touchstart', function() {
           G.world.buttonDown = 'right';
           G.world.player.rotationDir = 1;
+          $(this).find('img').css('filter', 'brightness(0.5)');
         });
         $('.right').on('touchend', function() {
           G.world.buttonDown = false;
           G.world.player.rotationDir = 0;
+          $(this).find('img').css('filter', 'brightness(1)');
         });
         $('.up').on('touchstart', function() {
           G.world.buttonDown = 'up';
           G.world.player.accelerates = true;
+          $(this).find('img').css('filter', 'brightness(0.5)');
         });
         $('.up').on('touchend', function() {
           G.world.buttonDown = false;
           G.world.player.accelerates = false;
+          $(this).find('img').css('filter', 'brightness(1)');
         });
         $('.down').on('touchstart', function() {
           G.world.buttonDown = 'down';
           G.world.player.brakes = true;
+          $(this).find('img').css('filter', 'brightness(0.5)');
         });
         $('.down').on('touchend', function() {
           G.world.buttonDown = false;
           G.world.player.brakes = false;
+          $(this).find('img').css('filter', 'brightness(1)');
         });
 
 
@@ -362,7 +426,10 @@ Game.prototype = {
     gameOver: function(){
         this.menu = new End();
         gameover.play();
-        $('#wanna_cash').click();
+        if (rand(1, 99) < 40) {
+          $('#wanna_cash').click();
+        }
+        $('.police-timer').text('0');
         $('.start').show(200);
         $('.left').hide(200);
     		$('.right').hide(200);
@@ -1069,7 +1136,12 @@ function Car(){
     this.vectors = [];
     this.accelerates = false;
     this.brakes = false;
-    this.maxSpeed = 500;
+    if (localStorage.getItem("car_color") == 'lpr') {
+      this.maxSpeed = 500;
+      this.maxSpeed = this.maxSpeed+((this.maxSpeed/100)*30);
+    }else {
+      this.maxSpeed = 500;
+    }
     this.drifts = true;
 
     this.t = 0;
@@ -1085,14 +1157,18 @@ function Car(){
 
     this.radius = 10;
 
-    this.carType = rp([
+    this.nameCar = rand(0,6);
+    this.arrayCars = [
         car.white,
         car.blue,
         car.red,
         car.green,
         car.purple,
+        car.polise,
         car.gray
-    ]);
+    ];
+
+    this.carType = this.arrayCars[this.nameCar];
 }
 
 Car.prototype = {
@@ -1115,8 +1191,10 @@ Car.prototype = {
 
         this.rotation += this.rotationSpeed * e * this.rotationDir * r;
 
-        this.x += this.speed * M.cos(this.moveAngle) * e;
-        this.y += this.speed * M.sin(this.moveAngle) * e;
+
+          this.x += this.speed * M.cos(this.moveAngle) * e;
+          this.y += this.speed * M.sin(this.moveAngle) * e;
+
 
         var targetSpeed = 0,
             opposite = false;
@@ -1155,6 +1233,7 @@ Car.prototype = {
     },
     explode: function(){
         this.dead = true;
+        $('.police-timer').text('0');
         boom.play();
         for(var i = 0 ; i < 40 ; i++){
             var c = rp(['#ff0', '#f00', '#ff8400', '#000'])
@@ -1182,7 +1261,12 @@ Car.prototype = {
 
 function Player(){
     Car.call(this);
-    this.carType = car.yellow;
+    if (localStorage.getItem('car_color') == null) {
+      var carTmpStorage = car['yellow'];
+    }else {
+      var carTmpStorage = car[localStorage.getItem('car_color')];
+    }
+    this.carType = carTmpStorage;
     this.client = null;
     this.hud = new HUD();
     this.lastGoodPosition = null;
@@ -1337,8 +1421,14 @@ Player.prototype = xt(Car.prototype, {
 
         var price = d <= this.clientSettings.radius ? this.clientSettings.price : 0;
         if(price > 0){
+          if (localStorage.getItem("car_color") == 'black') {
+            var bonus = Math.round(price/100*30);
+            this.hud.message('reward: $' + price+" + bonus: $"+bonus+"");
+            this.cash += price+bonus;
+          }else {
             this.hud.message('reward: $' + price);
             this.cash += price;
+          }
             localStorage.setItem("cash", this.cash);
             money.play();
         }else{
@@ -1395,15 +1485,25 @@ function Enemy(){
 Enemy.prototype = xt(Car.prototype, {
     cycle: function(e){
         this.accelerates = !!this.path;
-
         var a = M.atan2(wld.player.y - this.y, wld.player.x - this.x);
         var d = dist(wld.player.x, wld.player.y, this.x, this.y);
-        if(abs(normalizeAngle(a - this.rotation)) < M.PI / 4 && d < 300){
+        if(abs(normalizeAngle(a - this.rotation)) < M.PI / 4 && d < 100){
             this.accelerates = false;
         }
 
         if(this.path){
             var targetAngle = M.atan2(this.path.y - this.y, this.path.x - this.x);
+            if (this.nameCar == 5) {
+
+              if (d < 480) {
+                if (police_wrong == true) {
+                  var targetAngle = M.atan2( wld.player.y - this.y, wld.player.x - this.x);
+                  this.maxSpeed = 480;
+                }
+              }else {
+                this.maxSpeed = 100;
+              }
+            }
             var diff = normalizeAngle(targetAngle - this.rotation);
             diff = limit(diff, -this.rotationSpeed * e, this.rotationSpeed * e);
 
@@ -1526,8 +1626,29 @@ Client.prototype = {
             Easing.tween(p, 'x', p.x, p.x + M.cos(a) * d, t);
             Easing.tween(p, 'y', p.y, p.y + M.sin(a) * d, t);
         }
+        if (rand(1, 99) < 40) {
+          if (police_wrong == false) {
+            police_wrong = true;
+            $('.police-timer').text('30');
+            $('.police-indecator').show(100);
+            var interval = setInterval(function () {
+              $('.police-timer').text(Number($('.police-timer').text())-1);
+              $('.police-indecator img').css('transform', 'scale(calc('+Number($('.police-timer').text())+'/30))');
+              if (Number($('.police-timer').text()) < 1) {
+                clearInterval(interval);
+                police_wrong = false;
+                fuck_the_police2.play();
+                $('.police-indecator').hide(100);
+              }
+            }, 1000);
 
-        wld.player.hud.message('don\'t kill customers!')
+            fuck_the_police.play();
+          }else {
+            $('.police-timer').text(Number($('.police-timer').text())+30);
+          }
+
+        }
+        wld.player.hud.message('don\'t kill customers!');
     },
     findSidewalk: function(){
         var t = wld.findClosestClientSpot(this.x, this.y);
@@ -2166,9 +2287,12 @@ var
 s = 4,
 
 car = {
-    white: newCar('#fff'),
+  white: newCar('#fff'),
+    lpr: newCar('#fff', false, true),
+    polise: newCar('#00f', false, false, true),
     broken: newCar('#1b1b1b', true),
-    yellow: newCar('#ff0'),
+    black: newCar('#1b1b1b'),
+    yellow: newCar('#ff0', false, false, false, true),
     blue: newCar('#00f'),
     red: newCar('#f00'),
     green: newCar('#0f0'),
@@ -2549,6 +2673,7 @@ Tree.prototype = xt(Building.prototype, {
 
 
 function music_toggle(elem) {
+  tap.play();
   var LSMusic = localStorage.getItem("music");
   if (LSMusic == 'false') {
     $(elem).find('.line').show(100);
@@ -2560,6 +2685,7 @@ function music_toggle(elem) {
 }
 
 function sound_toggle(elem) {
+  tap.play();
   var LSSound = localStorage.getItem("sound");
   if (LSSound == 'false') {
     $(elem).find('.line').show(100);
@@ -2575,31 +2701,132 @@ function show_shop(elem) {
     $(elem).text('tv?');
     swipe.play();
     $('.tv').animate({
-      left: '-=900px'
+      left: '-=1200px'
     },500);
     $('.shop-list').animate({
-      left: '-=900px'
+      left: '-=1200px'
     },500);
   }else {
     $(elem).text('shop?');
     $('.tv').animate({
-      left: '+=900px'
+      left: '+=1200px'
     },500);
     $('.shop-list').animate({
-      left: '+=900px'
+      left: '+=1200px'
     },500);
     swipe.play();
   }
 }
 
+function Shop() {
+
+}
+
+Shop.prototype = {
+  carSelect: function () {
+    var collect = JSON.parse(localStorage.getItem('car_collect'))
+    $('.car').each(function (i, val) {
+      var bool = false;
+      collect.forEach(function (j) {
+        if (i == j) {
+          bool = true;
+        }
+      });
+      if (bool) {
+        $($('.car')[i]).removeClass('black');
+        $($('.car')[i]).find('.block').hide(200);
+      }else{
+        $($('.car')[i]).addClass('black');
+        $($('.car')[i]).find('.block').show(200);
+
+      }
+    });
+  },
+  carBlockReload : function () {
+    if (localStorage.getItem('car_color')) {
+        $('.car').each(function () {
+          if ($(this).find('.pic').data('name') == localStorage.getItem('car_color')) {
+            $(this).find('.pic').addClass('select');
+          }else {
+            $(this).find('.pic').removeClass('select');
+          }
+        });
+    }else {
+      localStorage.setItem('car_color', 'yellow');
+    }
+  },
+  carBuy: function () {
+    $('.car').click(function () {
+      if ($(this).find('.block').css('display') != 'none') {
+        if (Number($(this).find('.prise span').text()) <= G.world.player.cash) {
+          G.world.player.cash = G.world.player.cash - Number($(this).find('.prise span').text());
+          localStorage.setItem('cash', G.world.player.cash);
+          var collect = JSON.parse(localStorage.getItem('car_collect'));
+          collect.push($(this).find('.pic').data('id'));
+          localStorage.setItem('car_collect', JSON.stringify(collect));
+          localStorage.setItem('car_color', $(this).find('.pic').data('name'));
+          G.world.player.carType = car[$(this).find('.pic').data('name')];
+          shop.carSelect();
+          $('.car').each(function () {
+              $(this).find('.pic').removeClass('select');
+          });
+          $(this).find('.pic').addClass('select');
+          buy.play();
+        }else {
+          toast.error('You do not have enough money to buy this car.');
+        }
+      }else {
+        $('.car').each(function () {
+            $(this).find('.pic').removeClass('select');
+        });
+        localStorage.setItem('car_color', $(this).find('.pic').data('name'));
+        G.world.player.carType = car[$(this).find('.pic').data('name')];
+        $(this).find('.pic').addClass('select');
+        tap.play();
+      }
+    });
+  }
+}
+
+function Toast() {
+
+}
+
+Toast.prototype = {
+  error: function () {
+    $('.toast .error').show(300,function () {
+      setTimeout(function () {
+        $('.toast .error').hide(300)
+      }, 2000);
+    });
+    error.play();
+  },
+  success: function () {
+
+  }
+}
+if (localStorage.getItem('car_collect') == null) {
+  localStorage.setItem('car_collect', '[0]');
+}
+var toast = new Toast();
+var shop = new Shop();
+shop.carSelect();
+shop.carBuy();
+shop.carBlockReload();
+
+
+
+
+// localStorage.setItem('car_collect', '[0]');
 
 
 
 
 
 
-
-
+function rand(min, max){
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 
 
