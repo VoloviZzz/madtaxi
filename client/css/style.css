@@ -39,6 +39,7 @@ body{
   width: 600px;
   height: 220px;
   background-color: #632020;
+  opacity: .8;
   z-index: 50;
   box-shadow:  0 0 30px #d44444;
 }
