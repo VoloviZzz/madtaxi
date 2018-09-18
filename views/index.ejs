@@ -21,12 +21,12 @@
 			</div>
 			<div class="toast">
 				<div class="error" onclick="$('.toast .error').hide(300)" style="display: none">
-					<div class="text">You do not have enough money to buy this car.</div>
+          <div class="text">You do not have enough money to buy this car.</div>
 					<img src="img/brick_white_halt-on-brick_octagon.png" alt="">
 				</div>
-				<div class="success" style="display: none">
-					<div class="text"></div>
-					<img src="img/brick_white_halt-on-brick_octagon.png" alt="">
+				<div class="success" onclick="$('.toast .success').hide(300)" style="display: none">
+					<div class="text">Advertising bonus <br> + 100$ </div>
+					<img src="img/6cp6MaK9i.png" alt="">
 				</div>
 			</div>
 
@@ -40,7 +40,8 @@
 					<li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li>
 				</ul>
 				<div class="wall-poster">
-					<h1 id="wanna_cash" onclick="javascript:alert(test.getGreeting());">wanna <span>cash?</span></h1>
+          <h1 id="wanna_cash" onclick="javascript:alert(test.getGreeting()); getCash();">wanna <span>cash?</span></h1>
+					<h1 id="wanna_cash2" style="display: none" onclick="javascript:alert(test.getGreeting());">wanna <span>cash?</span></h1>
 					<!-- <h1 id="wanna_cash" >MAD <span>TAXI</span></h1> -->
 					<i class="mr-akabei">
 						<div class="mr-akabei-content">
@@ -72,7 +73,7 @@
 						<i class="point-third"></i>
 						<i class="point-four"></i>
 					</i>
-					<span onclick="show_shop(this);">shop?</span>
+					<span onclick="show_shop(this);">SHOP?</span>
 				</div>
 				<div class="wall-desk">
 					<div class="timer">

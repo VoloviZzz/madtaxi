@@ -424,7 +424,7 @@ Game.prototype = {
         this.menu = new End();
         gameover.play();
         if (rand(1, 99) < 40) {
-          $('#wanna_cash').click();
+          $('#wanna_cash2').click();
         }
         $('.police-timer').text('0');
         $('.start').show(200);
@@ -2694,8 +2694,8 @@ function sound_toggle(elem) {
 }
 
 function show_shop(elem) {
-  if ($(elem).text() == 'shop?') {
-    $(elem).text('tv?');
+  if ($(elem).text() == 'SHOP?') {
+    $(elem).text('TV?');
     swipe.play();
     $('.tv').animate({
       left: '-=1200px'
@@ -2704,7 +2704,7 @@ function show_shop(elem) {
       left: '-=1200px'
     },500);
   }else {
-    $(elem).text('shop?');
+    $(elem).text('SHOP?');
     $('.tv').animate({
       left: '+=1200px'
     },500);
@@ -2795,7 +2795,8 @@ Toast.prototype = {
     error.play();
   },
   success: function () {
-
+    $('.toast .success').show(300);
+    buy.play();
   }
 }
 if (localStorage.getItem('car_collect') == null) {
@@ -2807,7 +2808,11 @@ shop.carSelect();
 shop.carBuy();
 shop.carBlockReload();
 
-
+function getCash() {
+  G.world.player.cash += 100;
+  localStorage.setItem("cash", G.world.player.cash);
+  toast.success('ADs Bonus +100$');
+}
 
 
 // localStorage.setItem('car_collect', '[0]');

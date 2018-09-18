@@ -80,6 +80,41 @@ body{
   animation: strabascope 4s infinite linear;
 }
 
+.success {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 220px;
+  background-color: #206326;
+  opacity: .8;
+  z-index: 50;
+  box-shadow:  0 0 30px #4ed444;
+}
+.success img{
+  filter: brightness(1);
+  position: absolute;
+  left: 50%;
+  top: 10%;
+  width: 15%;
+  transform: translate(-50%, -0%);
+}
+
+.success .text{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 80%;
+  transform: translate(-50%, -0%);
+  font-size: 4em;
+  line-height: 1em;
+  text-align: center;
+  color: #50d444;
+  text-shadow: 0 0 10px #359c33;
+  animation: strabascope 4s infinite linear;
+}
+
 @keyframes strabascope {
   0% {
     text-shadow: 0 0 10px #9c3333;
