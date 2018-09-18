@@ -2303,6 +2303,7 @@ html {
 *::after {
   box-sizing: inherit;
 }
+
 html,
 body {
   width: 100%;
@@ -2331,14 +2332,6 @@ body {
 }
 
 
-@media all and (min-width:1023px) {
-  body{
-    height: 10%;
-    transform: scale(1.8);
-    top: 280px;
-    left: 350px;                         
-  }
-} 
 
 
 h1,
