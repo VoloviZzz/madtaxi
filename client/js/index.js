@@ -1,5 +1,3 @@
-
-// JS
 $(document).ready(function() {
 
 
@@ -18,7 +16,6 @@ $(document).ready(function() {
       }
     });
   });
-
 
 
     // TIME
@@ -2794,11 +2791,7 @@ function Toast() {
 
 Toast.prototype = {
   error: function () {
-    $('.toast .error').show(300,function () {
-      setTimeout(function () {
-        $('.toast .error').hide(300)
-      }, 2000);
-    });
+    $('.toast .error').show(300);
     error.play();
   },
   success: function () {
@@ -2832,10 +2825,43 @@ function rand(min, max){
 
 
 
+function sendNotification(title, options) {
+    // Проверим, поддерживает ли браузер HTML5 Notifications
+    if (!("Notification" in window)) {
+      alert('Ваш браузер не поддерживает HTML Notifications, его необходимо обновить.');
+    }
+
+    // Проверим, есть ли права на отправку уведомлений
+    else if (Notification.permission === "granted") {
+      // Если права есть, отправим уведомление
+      var notification = new Notification('Новое обновление в игре MadTaxi',
+        { body: 'Новые атомобили уже в магазине. Осторожнее с клиентами, копы могут погнаться за тобой.', dir: 'auto', icon: 'img/logo.png' }
+      )
+
+      // function clickFunc() {  }
+
+      // notification.onclick = clickFunc;
+    }
+
+    // Если прав нет, пытаемся их получить
+    else if (Notification.permission !== 'denied') {
+        Notification.requestPermission(function (permission) {
+          // Если права успешно получены, отправляем уведомление
+        if (permission === "granted") {
+          var notification = new Notification(title, options);
+
+        } else {
+          alert('Вы запретили показывать уведомления'); // Юзер отклонил наш запрос на показ уведомлений
+        }
+      });
+    } else {
+    // Пользователь ранее отклонил наш запрос на показ уведомлений
+    // В этом месте мы можем, но не будем его беспокоить. Уважайте решения своих пользователей.
+  }
+}
 
 
 
-
-
+// sendNotification()
 
 //---------
