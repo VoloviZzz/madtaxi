@@ -10,23 +10,24 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <script>
+    var light = 0;
     var timerdigits = 1;
 </script>
 <body>
   <!-- <div class="page"> -->
     <div class="controls">
-			<div class="rotatePhone"><img src="img/rotatePhone.png" alt=""></div>
+			<div class="rotatePhone"><img src="img/rotatePhone.png" ></div>
 			<div class="loader">
 				<div class="circul"></div>
 			</div>
 			<div class="toast">
 				<div class="error" onclick="$('.toast .error').hide(300)" style="display: none">
           <div class="text">You do not have enough money to buy this car.</div>
-					<img src="img/brick_white_halt-on-brick_octagon.png" alt="">
+					<img src="img/brick_white_halt-on-brick_octagon.png" >
 				</div>
 				<div class="success" onclick="$('.toast .success').hide(300)" style="display: none">
 					<div class="text">Advertising bonus <br> + 100$ </div>
-					<img src="img/6cp6MaK9i.png" alt="">
+					<img src="img/6cp6MaK9i.png" >
 				</div>
 			</div>
 
@@ -99,6 +100,19 @@
 					<i class="wall-desk-bottom"></i>
 					<i class="wall-desk-front"></i>
 					<i class="wall-desk-right"></i>
+          <div class="switch">
+            <i onclick="toggleLight()" class="onclick"></i>
+            <i class="switch-desk-shadow"></i>
+            <i class="switch-desk-bottom"></i>
+            <i class="switch-desk-front"></i>
+            <i class="switch-desk-right"></i>
+            <div class="toggle">
+              <i class="toggle-desk-shadow"></i>
+              <i class="toggle-desk-bottom"></i>
+              <i class="toggle-desk-front"></i>
+              <i class="toggle-desk-right"></i>
+            </div>
+          </div>
 				</div>
 			</div>
 			<div class="floor-bg"><div class="floor-hr"><i></i></div></div>
@@ -114,7 +128,7 @@
 					</div>
 					<div class="tv-screen">
 						<div class="gameStop" onclick="G.gameOver()">
-							<img src="img/seo-social-web-network-internet_322_icon-icons.com_61532.png" alt="">
+							<img src="img/seo-social-web-network-internet_322_icon-icons.com_61532.png" >
 						</div>
 						<a href="" class="pw-btn"></a>
 						<div class="tv-hr">
@@ -127,12 +141,12 @@
 
 										<canvas></canvas>
 										<div class="tv-glass-vintage">
-											<ul><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>
+											<ul><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>
 
-											<i class="tv-noise"></i><i class="tv-noise-second"></i>
-											<i class="tv-glow"></i>
+											<!-- <i class="tv-noise"></i><i class="tv-noise-second"></i> -->
+											<!-- <i class="tv-glow"></i> -->
                       <div class="police-indecator" style="display: none;">
-                        <img src="img/zvezdia-517.gif" alt="">
+                        <img src="img/zvezdia-517.gif" >
                         <div class="police-timer" style="display: none;">0</div>
                       </div>
 										</div>
@@ -150,64 +164,64 @@
 				</div>
 				<div class="shop-list">
 					<div class="shop-btns">
-						<div class="shop-btn black" data-cat="map">
-								<img src="img/261205.png" alt="">
+
+						<div class="shop-btn black" data-cat="cars-list">
+								<img src="img/syl3d.png" >
 						</div>
-						<div class="shop-btn" data-cat="car">
-								<img src="img/syl3d.png" alt="">
+						<div class="shop-btn" data-cat="songs-list">
+								<img src="img/95159_music_512x512.png" >
 						</div>
-						<div class="shop-btn" data-cat="lock">
-								<img src="img/unnamed.png" alt="">
-						</div>
-					</div>
-					<div class="map shop-item">
-						<img src="img/map1.png" alt="">
-						<img src="img/unnamed.png" alt="" style="display:none">
-					</div>
-					<div class="map shop-item black">
-						<img src="img/map1.png" alt="">
-						<img src="img/unnamed.png" alt="">
-					</div>
-					<div class="map shop-item black">
-						<img src="img/map1.png" alt="">
-						<img src="img/unnamed.png" alt="">
 					</div>
 
-          <div class="lock shop-item black" style="display:none">
-						<img src="img/map1.png" alt="">
-						<img src="img/unnamed.png" alt="">
-					</div>
-					<div class="lock shop-item black" style="display:none">
-						<img src="img/map1.png" alt="">
-						<img src="img/unnamed.png" alt="">
-					</div>
-					<div class="lock shop-item black" style="display:none">
-						<img src="img/map1.png" alt="">
-						<img src="img/unnamed.png" alt="">
-					</div>
+          <div class="songs-list cat-block-content" style="display:none">
+            <div class="song shop-item shop-item-song">
+              <div class="obj" data-name="The Offspring - All I Want.mp3" data-id="0"></div>
+  						<img class="block" src="img/unnamed.png" style="display:none">
+  						<div class="prise"><span>0</span>$</div>
+  						<div class="name">The Offspring - All I Want</div>
+  					</div>
+  					<div class="song shop-item shop-item-song black">
+              <div class="obj" data-name="the-offspring-the-kids-arent-alright.mp3" data-id="1"></div>
+  						<img class="block" src="img/unnamed.png" >
+  						<div class="prise"><span>200</span>$</div>
+  						<div class="name">The Offspring - The kids arent alright</div>
+  					</div>
+  					<div class="song shop-item shop-item-song black">
+              <div class="obj" data-name="fatboy_slim_-_push_the_tempo.mp3" data-id="2"></div>
+  						<img class="block" src="img/unnamed.png" >
+  						<div class="prise"><span>400</span>$</div>
+  						<div class="name">Fatboy Slim - Push The Tempo</div>
+  					</div>
+            <div class="song shop-item shop-item-song black">
+              <div class="obj" data-name="The Offspring - Gone Away.mp3" data-id="3"></div>
+  						<img class="block" src="img/unnamed.png" >
+  						<div class="prise"><span>600</span>$</div>
+  						<div class="name">The Offspring - Gone Away</div>
+  					</div>
+          </div>
 
-					<div class="cars-list">
-            <div class="car shop-item" style="display:none">
-  						<img class="pic select" data-name="yellow" data-id="0" src="img/car1.png" alt="">
-  						<img class="block" src="img/unnamed.png" alt="" style="display:none">
+					<div class="cars-list cat-block-content">
+            <div class="car car-item shop-item">
+  						<img class="pic select" data-name="yellow" data-id="0" src="img/car1.png" >
+  						<img class="block" src="img/unnamed.png"  style="display:none">
   						<div class="prise"><span>0</span>$</div>
   						<div class="name">YaTaxi</div>
   					</div>
-  					<div class="car shop-item black" style="display:none">
-  						<img class="pic" src="img/car2.png" data-name="black" data-id="1" alt="">
-  						<img class="block" src="img/unnamed.png" alt="">
+  					<div class="car car-item shop-item black">
+  						<img class="pic" src="img/car2.png" data-name="black" data-id="1" >
+  						<img class="block" src="img/unnamed.png" >
   						<div class="prise"><span>500</span>$ <br> +30% cash</div>
   						<div class="name">Uber Black</div>
   					</div>
-  					<div class="car shop-item black" data-name="white" style="display:none">
-  						<img class="pic" src="img/car3.png" data-name="lpr" data-id="2" alt="">
-  						<img class="block" src="img/unnamed.png" alt="">
+  					<div class="car car-item shop-item black" data-name="white" >
+  						<img class="pic" src="img/car3.png" data-name="lpr" data-id="2" >
+  						<img class="block" src="img/unnamed.png" >
   						<div class="prise"><span>1100</span>$ <br>+30% speed <br>+50% freedom</div>
   						<div class="name">Libertarian Car</div>
   					</div>
-            <div class="car shop-item black" data-name="polise" style="display:none">
-  						<img class="pic" src="img/car4.png" data-name="polise" data-id="3" alt="">
-  						<img class="block" src="img/unnamed.png" alt="">
+            <div class="car car-item shop-item black" data-name="polise" >
+  						<img class="pic" src="img/car4.png" data-name="polise" data-id="3" >
+  						<img class="block" src="img/unnamed.png" >
   						<div class="prise"><span>3100</span>$ <br>+police ignore</div>
   						<div class="name">Police Car</div>
   					</div>
@@ -266,11 +280,29 @@
 		<script src='js/jquery-3.2.1.min.js'></script>
   <script src='js/webaudiox.js'></script>
 	<script>
+  if (localStorage.getItem('music') == null) {
+    localStorage.setItem('music', 'true');
+  }
+  if (localStorage.getItem('sound') == null) {
+    localStorage.setItem('sound', 'true');
+  }
+  if (localStorage.getItem('song_collect') == null) {
+    localStorage.setItem('song_collect', '[0]');
+  }
+  if (localStorage.getItem('song_select') == null) {
+    localStorage.setItem('song_select', '0');
+  }
+  if (localStorage.getItem('car_collect') == null) {
+    localStorage.setItem('car_collect', '[0]');
+  }
+  if (localStorage.getItem('car_color') == null) {
+    localStorage.setItem('car_color', 'yellow');
+  }
 
+  // localStorage.setItem('cash', '500');
 
-
-	var sounds1  = new WebAudiox.GameSounds();
-	var sounds  = new WebAudiox.GameSounds();
+	var sounds1 = new WebAudiox.GameSounds();
+	var sounds = new WebAudiox.GameSounds();
 	var music;
 	var boom;
 	var kill;
@@ -286,8 +318,13 @@
   var fuck_the_police;
   var fuck_the_police2;
   var police_wrong = false;
-
-	var music_one = sounds1.createClip({volume: 0.0, loop: true}).load('music/The Offspring - All I Want.mp3', function(soundClip){
+  var first_song;
+  $('.song').each(function () {
+    if (String($(this).find('.obj').data('id')) == localStorage.getItem('song_select')) {
+      first_song = $(this).find('.obj').data('name');
+    }
+  });
+	var music_one = sounds1.createClip({volume: 0.0, loop: true}).load('music/'+first_song, function(soundClip){
 		$('.loader').hide(200);
 	 music = soundClip;
 	})
@@ -330,13 +367,15 @@
 	function start(e) {
 		G.restart();
 		// G.menu = null;
+    $('.police-timer').text('0');
 		$('html').addClass('show-player');
 		$(e).hide(200);
 		$('.left').show(200);
 		$('.right').show(200);
 		$('.up').show(200);
 		$('.down').show(200);
-		$('.start').css('left', '34.5%');
+    $('.start').css('left', '34.5%');
+		$('.start').css('font-size', '2.8em');
 		$('.tv-screen').css('transform', 'scale(2)');
 		setTimeout(function () {
 			$('.gameStop').show(200);

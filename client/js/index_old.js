@@ -41,7 +41,7 @@ $(document).ready(function() {
 
       }
       $('.timer-digits').html(time);
-      $('canvas').css('width', '840px')
+      $('canvas').css('width', '700px')
     }, 1000);
 
 
@@ -56,6 +56,17 @@ $(document).ready(function() {
         R =         82
     */
 
+    $(document).on('keydown', function(e){
+        var code = e.keyCode,
+            delay = 300;
+
+        //console.log(code);
+
+        if (code == 13) {
+            $('html').addClass('show-player');
+        }
+
+    });
 });
 
 
@@ -315,9 +326,9 @@ function newCar(color, noLights, lpr, polise, taxi){
 };
 
 var P = {
-    w: 840,
-    h: 660,
-    v: 5
+    w: 700,
+    h: 550,
+    v: 130
 };
 
 function Game(){
@@ -334,8 +345,8 @@ function Game(){
     this.start();
 
     // Resizing
-    // this.resize();
-    // addEventListener('resize', this.resize, false);
+    this.resize();
+    addEventListener('resize', this.resize, false);
 
     // addEventListener('keydown', this.keyDown.bind(this), false);
     // addEventListener('keyup', this.keyUp.bind(this), false);
@@ -376,22 +387,12 @@ Game.prototype = {
           G.world.player.rotationDir = 0;
           $(this).find('img').css('filter', 'brightness(1)');
         });
-        $('.left').on('touchcancel', function() {
-          G.world.buttonDown = false;
-          G.world.player.rotationDir = 0;
-          $(this).find('img').css('filter', 'brightness(1)');
-        });
         $('.right').on('touchstart', function() {
           G.world.buttonDown = 'right';
           G.world.player.rotationDir = 1;
           $(this).find('img').css('filter', 'brightness(0.5)');
         });
         $('.right').on('touchend', function() {
-          G.world.buttonDown = false;
-          G.world.player.rotationDir = 0;
-          $(this).find('img').css('filter', 'brightness(1)');
-        });
-        $('.right').on('touchcancel', function() {
           G.world.buttonDown = false;
           G.world.player.rotationDir = 0;
           $(this).find('img').css('filter', 'brightness(1)');
@@ -406,22 +407,12 @@ Game.prototype = {
           G.world.player.accelerates = false;
           $(this).find('img').css('filter', 'brightness(1)');
         });
-        $('.up').on('touchcancel', function() {
-          G.world.buttonDown = false;
-          G.world.player.accelerates = false;
-          $(this).find('img').css('filter', 'brightness(1)');
-        });
         $('.down').on('touchstart', function() {
           G.world.buttonDown = 'down';
           G.world.player.brakes = true;
           $(this).find('img').css('filter', 'brightness(0.5)');
         });
         $('.down').on('touchend', function() {
-          G.world.buttonDown = false;
-          G.world.player.brakes = false;
-          $(this).find('img').css('filter', 'brightness(1)');
-        });
-        $('.down').on('touchcancel', function() {
           G.world.buttonDown = false;
           G.world.player.brakes = false;
           $(this).find('img').css('filter', 'brightness(1)');
@@ -467,7 +458,7 @@ Game.prototype = {
             var totalTime = Date.now() - this.frameCountStart;
             var fps = this.frameCount / (totalTime / 1000);
             if(fps < 30){
-                this.setResolution(.5);
+                this.setResolution(.6);
             }
         }
 
@@ -561,9 +552,9 @@ function World(){
 
     this.t = 0;
 
-    var w = 840,
-        h = 610,
-        bt = 20;
+    var w = 16000,
+        h = 16000,
+        bt = 200;
 
     //this.addBuilding(new Building(-bt, 0, bt, h));
     //this.addBuilding(new Building(w, 0, bt, h));
@@ -814,17 +805,34 @@ World.prototype = {
             this.cars[i].cycle(e);
         }
 
+        // TODO handle camera
+        //var angle = !this.player.dead ? this.player.moveAngle : this.player.moveAngle + M.PI;
+
+        //var idealX = this.player.x - P.w / 2 + M.cos(angle) * this.player.speed * .4;
+        //var idealY = this.player.y - P.h / 2 + M.sin(angle) * this.player.speed * .4;
+
+        //idealX = wld.player.x - P.w / 2 + M.cos(angle) * this.player.speed * .4;
+        //idealY = wld.player.y - P.h / 2 + M.sin(angle) * this.player.speed * .4;
 
         var camSpeed = !this.player.dead ? 600 : 100;
 
-        this.camX = (wld.player.x - P.w / 2 + M.cos(wld.player.moveAngle));
-        this.camY = (wld.player.y - P.h / 2 + M.sin(wld.player.moveAngle));
+        //var distance = dist(idealX, idealY, this.camX, this.camY);
+        //var appliedDistance = limit(distance, -camSpeed * e, camSpeed * e);
+
+        //var angle = Math.atan2(idealY - this.camY, idealX - this.camX);
+        //this.camX += Math.cos(angle) * appliedDistance;
+        //this.camY += Math.sin(angle) * appliedDistance;
+
+        this.camX = wld.player.x - P.w / 2 + M.cos(wld.player.moveAngle) * 100;
+        this.camY = wld.player.y - P.h / 2 + M.sin(wld.player.moveAngle) * 100;
 
         if(this.shakeTime > 0){
             this.camX += rd(-10, 10);
             this.camY += rd(-10, 10);
         }
 
+        //this.camX = idealX;
+        //this.camY = idealX;
 
         var idealRotation = -this.player.rotation - M.PI / 2;
         var diff = idealRotation - this.camRotation;
@@ -1047,28 +1055,28 @@ Home.prototype = xt(Menu.prototype, {
         Menu.prototype.cycle.call(this, e);
 
         var t = 'madtaxi',
-            w = textWidth(t, -30);
-        drawText(c, t, 'orange', (P.w - w) / 50, 60, 1.2, 40);
+            w = textWidth(t);
+        drawText(c, t, 'white', (P.w - w) / 2, 80, 1, 1);
 
-        t = 'find clients and drive them';
-        w = textWidth(t, -1);
-        drawText(c, t, 'white', (P.w - w) / 50, 180, .6, 1);
+        t = 'find customers and drive them';
+        w = textWidth(t, .5);
+        drawText(c, t, 'white', (P.w - w) / 2, 200, .5, 1);
 
         t = 'to their destination';
-        w = textWidth(t, -5);
-        drawText(c, t, 'white', (P.w - w) / 50, 225, .6, 1);
+        w = textWidth(t, .5);
+        drawText(c, t, 'white', (P.w - w) / 2, 250, .5, 1);
 
         t = ' ';
         w = textWidth(t, .5);
-        drawText(c, t, 'white', (P.w - w) / 50, 360, .6, 1);
+        drawText(c, t, 'white', (P.w - w) / 2, 400, .5, 1);
 
         // t = ' ';
         // w = textWidth(t, .5);
-        // drawText(c, t, 'white', (P.w - w) / 50, 450, .5, 1);
+        // drawText(c, t, 'white', (P.w - w) / 2, 450, .5, 1);
 
         t = 'press       to start',
         w = textWidth(t, .8);
-        drawText(c, t, 'white', (P.w - w) / 50, 405, .96, 1);
+        drawText(c, t, 'white', (P.w - w) / 2, 450, .8, 1);
 
         //
 
@@ -1089,45 +1097,20 @@ End.prototype = xt(Menu.prototype, {
         Menu.prototype.cycle.call(this, e);
 
         var t = 'game over',
-            w = textWidth(t, -18);
-        drawText(c, t, 'orange', (P.w - w) / 50, 60, 1.2, 40);
+            w = textWidth(t);
+        drawText(c, t, 'white', (P.w - w) / 2, 80, 1, 1);
 
-        t = 'you drived ' + wld.player.dropoffs + ' clients',
-        w = textWidth(t, -2);
-        drawText(c, t, 'white', (P.w - w) / 50, 180, .72, 1);
+        var t = 'you served ' + wld.player.dropoffs + ' customers',
+            w = textWidth(t, .5);
+        drawText(c, t, 'white', (P.w - w) / 2, 200, .5, 1);
 
-        t = 'total cash $' + wld.player.cash,
-        w = textWidth(t, -12);
-        drawText(c, t, 'white', (P.w - w) / 50, 225, .72, 1);
+        var t = 'and collected $' + wld.player.cash,
+            w = textWidth(t, .5);
+        drawText(c, t, 'white', (P.w - w) / 2, 250, .5, 1);
 
-        t = ' ';
-        w = textWidth(t, .5);
-        drawText(c, t, 'white', (P.w - w) / 50, 360, .6, 1);
-
-        // t = ' ';
-        // w = textWidth(t, .5);
-        // drawText(c, t, 'white', (P.w - w) / 50, 450, .5, 1);
-
-        t = 'press       to try again',
+        var t = 'press       to try again',
         w = textWidth(t, .8);
-        drawText(c, t, 'white', (P.w - w) / 50, 405, .8, 1);
-
-        //
-        // var t = 'game over',
-        //     w = textWidth(t);
-        // drawText(c, t, 'orange', (P.w - w) / 2, 80, 1, 1);
-        //
-        // var t = 'you served ' + wld.player.dropoffs + ' clients',
-        //     w = textWidth(t, .5);
-        // drawText(c, t, 'white', (P.w - w) / 2, 200, .5, 1);
-        //
-        // var t = 'total cash $' + wld.player.cash,
-        //     w = textWidth(t, .5);
-        // drawText(c, t, 'white', (P.w - w) / 2, 250, .5, 1);
-        //
-        // var t = 'press       to try again',
-        // w = textWidth(t, .8);
-        // drawText(c, t, 'white', (P.w - w) / 2, 450, .8, 1);
+        drawText(c, t, 'white', (P.w - w) / 2, 450, .8, 1);
 
         alpha(1);
     },
@@ -1541,7 +1524,7 @@ Enemy.prototype = xt(Car.prototype, {
 function Client(){
     this.x = this.y = 0;
     this.done = false;
-    this.type = rp([clientRed, clientBlue, clientBlack, clientYellow, clientDevil]);
+    this.type = rp([clientRed, clientBlue, clientBlack, clientYellow]);
 };
 
 Client.prototype = {
@@ -1661,7 +1644,7 @@ Client.prototype = {
           }
 
         }
-        wld.player.hud.message('don\'t kill clients!');
+        wld.player.hud.message('don\'t kill customers!');
     },
     findSidewalk: function(){
         var t = wld.findClosestClientSpot(this.x, this.y);
@@ -1688,31 +1671,27 @@ HUD.prototype = {
             m = this.msg;
         }else if(wld.player.client){
             var tl = M.ceil(M.max(0, wld.player.clientTimeLeft));
-            m = 'client time left: ' + tl;
+            m = 'customer time left: ' + tl;
         }else{
-            m = 'find a client'
+            m = 'find a customer'
         }
 
-        var w = textWidth(m, .8);
+        var w = textWidth(m, .5);
         var x = (P.w - w) / 2,
-            y = P.h / 2 + 180;
+            y = P.h / 2 + 200;
         //drawText(c, m, 'black', x, y + 5, .5);
-        if (m == 'don\'t kill clients!') {
-          drawText(c, m, 'orange', x+30, y, .5, 1);
-        }else {
-          drawText(c, m, 'white', x, y, .5, 1);
-        }
+        drawText(c, m, 'white', x, y, .5, 1);
 
         m = 'cash: $' + wld.player.cash;
-        w = textWidth(m)
-        drawText(c, m, 'white', P.w - w + 35, 20, .5, 1);
+        w = textWidth(m, .5)
+        drawText(c, m, 'white', P.w - w - 20, 20, .5, 1);
 
 
         drawText(c, 'cars: ' + wld.player.lives, 'white', 20, 20, .5, 1);
 
         if(!wld.player.client){
             m = 'time: ' + ~~(wld.timeleft);
-            w = textWidth(m)
+            w = textWidth(m, .5)
             drawText(c, m, 'white', (P.w - w) / 2, 20, .5, 1);
         }
     },
@@ -2317,49 +2296,30 @@ car = {
     gray: newCar('#6c6c6c'),
 },
 
-client = function(color, devil){
+client = function(color){
     return cache(20, 30, function(c, r){
         r.fs(color);
         //r.beginPath();
         //r.arc(c.width / 2, c.height / 2, 9, 0, M.PI * 2, true);
         //r.fill();
-        if (devil == true) {
-          var w = 21,
-              h = 27;
-          r.fr((c.width - w)/ 2, (c.height - h) / 2, w, h);
 
-          r.bp();
-          r.arc(c.width / 2, c.height / 2 - 10, 4, 0, M.PI * 2, true);
-          r.arc(c.width / 2, c.height / 2 + 10, 4, 0, M.PI * 2, true);
-          r.fill();
+        var w = 14,
+            h = 18;
+        r.fr((c.width - w)/ 2, (c.height - h) / 2, w, h);
 
-          r.fs('#e99a79');
-          r.bp();
-          r.arc(c.width / 2, c.height / 2, 6, 0, M.PI * 2, true);
-          r.fill();
+        r.bp();
+        r.arc(c.width / 2, c.height / 2 - 10, 4, 0, M.PI * 2, true);
+        r.arc(c.width / 2, c.height / 2 + 10, 4, 0, M.PI * 2, true);
+        r.fill();
 
-          r.fs('#000');
-          r.fr(c.width / 2 + 2, c.height / 2 - 3, 2, 2);
-          r.fr(c.width / 2 + 2, c.height / 2 + 3, 2, -2);
-        }else {
-          var w = 14,
-              h = 18;
-          r.fr((c.width - w)/ 2, (c.height - h) / 2, w, h);
+        r.fs('#e99a79');
+        r.bp();
+        r.arc(c.width / 2, c.height / 2, 6, 0, M.PI * 2, true);
+        r.fill();
 
-          r.bp();
-          r.arc(c.width / 2, c.height / 2 - 10, 4, 0, M.PI * 2, true);
-          r.arc(c.width / 2, c.height / 2 + 10, 4, 0, M.PI * 2, true);
-          r.fill();
-
-          r.fs('#e99a79');
-          r.bp();
-          r.arc(c.width / 2, c.height / 2, 6, 0, M.PI * 2, true);
-          r.fill();
-
-          r.fs('#000');
-          r.fr(c.width / 2 + 2, c.height / 2 - 3, 2, 2);
-          r.fr(c.width / 2 + 2, c.height / 2 + 3, 2, -2);
-        }
+        r.fs('#000');
+        r.fr(c.width / 2 + 2, c.height / 2 - 3, 2, 2);
+        r.fr(c.width / 2 + 2, c.height / 2 + 3, 2, -2);
     });
 },
 
@@ -2367,27 +2327,6 @@ clientRed = client('#900'),
 clientBlack = client('#000'),
 clientBlue = client('#00f'),
 clientYellow = client('#880'),
-clientDevil = client('#f00', true),
-
-police_arrow = cache(40, 40, function(c, r){
-    with(r){
-        tr(c.width / 2, c.height / 2);
-        rotate(Math.PI / 2);
-        tr(-c.width / 2, -c.height / 2);
-        tr(0, c.height);
-        sc(1, -1);
-        fs('#11d');
-        bp();
-        mt(20, 40);
-        lt(40, 20);
-        lt(30, 20);
-        lt(30, 0);
-        lt(10, 0);
-        lt(10, 20);
-        lt(0, 20);
-        fill();
-    }
-}),
 
 arrow = cache(40, 40, function(c, r){
     with(r){
@@ -2428,7 +2367,7 @@ grass = cache(200, 200, function(c, r){
     var s = 4;
     for(var x = 0 ; x < c.width ; x += s){
         for(var y = 0 ; y < c.height ; y += s){
-            r.fs('rgb(0,' + 98 + ', 0)');
+            r.fs('rgb(0,' + (128 + ~~rd(-50, 50)) + ', 0)');
             r.fr(x, y, s, s);
         }
     }
@@ -2448,7 +2387,7 @@ sidewalk = cache(100, 100, function(c, r){
             var v = (isBorder ? 80 : 100) + ~~rd(-10, 10);
 
 
-            r.fs('rgb(' + 100 + ', ' + 100 + ', ' + 100 + ')');
+            r.fs('rgb(' + v + ', ' + v + ', ' + v + ')');
             r.fr(x, y, s, s);
         }
     }
@@ -2458,7 +2397,7 @@ road = cache(200, 200, function(c, r){
     for(var x = 0 ; x < c.width ; x += s){
         for(var y = 0 ; y < c.height ; y += s){
             var v = 40 + ~~rd(-10, 10);
-            r.fs('rgb(' + 40 + ', ' + 40 + ', ' + 40 + ')');
+            r.fs('rgb(' + v + ', ' + v + ', ' + v + ')');
             r.fr(x, y, s, s);
         }
     }
@@ -2467,7 +2406,7 @@ road = cache(200, 200, function(c, r){
 water = cache(100, 100, function(c, r){
     for(var x = 0 ; x < c.width ; x += s){
         for(var y = 0 ; y < c.height ; y += s){
-            r.fs('rgb(0, ' + 170 + ', 255)');
+            r.fs('rgb(0, ' + ~~(168 + ~~rd(-10, 10)) + ', 255)');
             r.fr(x, y, s, s);
         }
     }
@@ -2477,7 +2416,7 @@ xwalkh = cache(25, 50, function(c, r){
     for(var x = ~~(c.width / 4) ; x < c.width * .75 ; x += s){
         for(var y = 0 ; y < c.height ; y += s){
             var v = 255 - ~~rd(10, 50);
-            r.fs('rgb(' + 260 + ', ' + 260 + ', ' + 260 + ')');
+            r.fs('rgb(' + v + ', ' + v + ', ' + v + ')');
             r.fr(x, y, s, s);
         }
     }
@@ -2487,7 +2426,7 @@ xwalkv = cache(50, 25, function(c,r){
     for(var x = 0 ; x < c.width ; x += s){
         for(var y = ~~(c.height / 4) ; y < c.height * .75 ; y += s){
             var v = 255 - ~~rd(10, 50);
-            r.fs('rgb(' + 260 + ', ' + 260 + ', ' + 260 + ')');
+            r.fs('rgb(' + v + ', ' + v + ', ' + v + ')');
             r.fr(x, y, s, s);
         }
     }
@@ -2497,7 +2436,7 @@ roof = cache(100, 100, function(c, r){
     for(var x = 0 ; x < c.width ; x += s){
         for(var y = 0 ; y < c.height ; y += s){
             var v = 100 + ~~rd(-10, 10);
-            r.fs('rgb(' + 100 + ', ' + 100 + ', ' + 100 + ')');
+            r.fs('rgb(' + v + ', ' + v + ', ' + v + ')');
             r.fr(x, y, s, s);
         }
     }
@@ -2507,7 +2446,7 @@ roofb = cache(100, 100, function(c, r){
     for(var x = 0 ; x < c.width ; x += s){
         for(var y = 0 ; y < c.height ; y += s){
             var v = 50 + ~~rd(-10, 10);
-            r.fs('rgb(' + 50 + ', ' + 50 + ', ' + 50 + ')');
+            r.fs('rgb(' + v + ', ' + v + ', ' + v + ')');
             r.fr(x, y, s, s);
         }
     }
@@ -2517,7 +2456,7 @@ side1 = cache(100, 100, function(c, r){
     for(var x = 0 ; x < c.width ; x += s){
         for(var y = 0 ; y < c.height ; y += s){
             var v = 128 + ~~rd(-5, 5);
-            r.fs('rgb(' + 128 + ', ' + 128 + ', ' + 128 + ')');
+            r.fs('rgb(' + v + ', ' + v + ', ' + v + ')');
             r.fr(x, y, s, s);
         }
     }
@@ -2527,7 +2466,7 @@ side2 = cache(100, 100, function(c, r){
     for(var x = 0 ; x < c.width ; x += s){
         for(var y = 0 ; y < c.height ; y += s){
             var v = 153 + ~~rd(-5, 5);
-            r.fs('rgb(' + 153 + ', ' + 153 + ', ' + 153 + ')');
+            r.fs('rgb(' + v + ', ' + v + ', ' + v + ')');
             r.fr(x, y, s, s);
         }
     }
@@ -2537,7 +2476,7 @@ hline = cache(100, 4, function(c, r){
     for(var x = c.width * .25 ; x < c.width * .75 ; x += s){
         for(var y = 0 ; y < c.height ; y += s){
             var v = 255 - ~~rd(10, 50);
-            r.fs('rgb(' + 260 + ', ' + 260 + ', ' + 260 + ')');
+            r.fs('rgb(' + v + ', ' + v + ', ' + v + ')');
             r.fr(x, y, s, s);
         }
     }
@@ -2547,7 +2486,7 @@ vline = cache(4, 100, function(c, r){
     for(var y = c.height * .25 ; y < c.height * .75 ; y += s){
         for(var x = 0 ; x < c.height ; x += s){
             var v = 255 - ~~rd(10, 50);
-            r.fs('rgb(' + 260 + ', ' + 260 + ', ' + 260 + ')');
+            r.fs('rgb(' + v + ', ' + v + ', ' + v + ')');
             r.fr(x, y, s, s);
         }
     }
@@ -2562,7 +2501,7 @@ tree = cache(200, 200, function(c, r){
 
             if(f){
                 var v = 50 + ~~rd(-25, 25);
-                r.fs('rgb(0, ' + 70 + ', 0)');
+                r.fs('rgb(0, ' + v + ', 0)');
                 r.fr(x, y, s, s);
             }
         }
@@ -2577,7 +2516,7 @@ tree2 = cache(150, 150, function(c, r){
 
             if(f){
                 var v = 50 + ~~rd(-25, 25);
-                r.fs('rgb(0, ' + 72 + ', 0)');
+                r.fs('rgb(0, ' + v + ', 0)');
                 r.fr(x, y, s, s);
             }
         }
@@ -2596,7 +2535,7 @@ parking = cache(100, 300, function(c, r){
 
             if(draw){
                 var v = 255 - ~~rd(10, 50);
-                r.fs('rgb(' + 260 + ', ' + 260 + ', ' + 260 + ')');
+                r.fs('rgb(' + v + ', ' + v + ', ' + v + ')');
                 r.fr(x, y, s, s);
             }
         }
@@ -2801,16 +2740,17 @@ Shop.prototype = {
     });
   },
   songBlockReload : function () {
-    if (localStorage.getItem('song_select') == null) {
-      localStorage.setItem('song_select', '0');
-    }
+    if (localStorage.getItem('song_color')) {
         $('.song').each(function () {
-          if (String($(this).find('.obj').data('id')) == localStorage.getItem('song_select')) {
-            $(this).find('.obj').addClass('select');
+          if ($(this).find('.pic').data('name') == localStorage.getItem('song_color')) {
+            $(this).find('.pic').addClass('select');
           }else {
-            $(this).find('.obj').removeClass('select');
+            $(this).find('.pic').removeClass('select');
           }
         });
+    }else {
+      localStorage.setItem('song_color', 'yellow');
+    }
   },
   songBuy: function () {
     $('.song').click(function () {
@@ -2819,38 +2759,26 @@ Shop.prototype = {
           G.world.player.cash = G.world.player.cash - Number($(this).find('.prise span').text());
           localStorage.setItem('cash', G.world.player.cash);
           var collect = JSON.parse(localStorage.getItem('song_collect'));
-          collect.push($(this).find('.obj').data('id'));
+          collect.push($(this).find('.pic').data('id'));
           localStorage.setItem('song_collect', JSON.stringify(collect));
-          localStorage.setItem('song_select', $(this).find('.obj').data('id'));
-          $('.loader').show(200);
-          // G.world.player.songType = song[$(this).find('.obj').data('name')];
-          var music_one = sounds1.createClip().load('music/'+$(this).find('.obj').data('name'), function(soundClip){
-             music = soundClip;
-             $('.loader').hide(200);
-             // check_song_shop()
-           });
+          localStorage.setItem('song_color', $(this).find('.pic').data('name'));
+          G.world.player.songType = song[$(this).find('.pic').data('name')];
           shop.songSelect();
           $('.song').each(function () {
-              $(this).find('.obj').removeClass('select');
+              $(this).find('.pic').removeClass('select');
           });
-          $(this).find('.obj').addClass('select');
+          $(this).find('.pic').addClass('select');
           buy.play();
         }else {
           toast.error('You do not have enough money to buy this song.');
         }
       }else {
         $('.song').each(function () {
-            $(this).find('.obj').removeClass('select');
+            $(this).find('.pic').removeClass('select');
         });
-        localStorage.setItem('song_select', $(this).find('.obj').data('id'));
-        $('.loader').show(200);
-        // G.world.player.songType = song[$(this).find('.obj').data('name')];
-        var music_one = sounds1.createClip().load('music/'+$(this).find('.obj').data('name'), function(soundClip){
-        	 music = soundClip;
-           $('.loader').hide(200);
-           // check_song_shop()
-         });
-        $(this).find('.obj').addClass('select');
+        localStorage.setItem('song_color', $(this).find('.pic').data('name'));
+        G.world.player.songType = song[$(this).find('.pic').data('name')];
+        $(this).find('.pic').addClass('select');
         tap.play();
       }
     });
@@ -2875,9 +2803,7 @@ Shop.prototype = {
     });
   },
   carBlockReload : function () {
-    if (localStorage.getItem('car_color') == null) {
-      localStorage.setItem('car_color', 'yellow');
-    }
+    if (localStorage.getItem('car_color')) {
         $('.car').each(function () {
           if ($(this).find('.pic').data('name') == localStorage.getItem('car_color')) {
             $(this).find('.pic').addClass('select');
@@ -2885,7 +2811,9 @@ Shop.prototype = {
             $(this).find('.pic').removeClass('select');
           }
         });
-
+    }else {
+      localStorage.setItem('car_color', 'yellow');
+    }
   },
   carBuy: function () {
     $('.car-item').click(function () {
@@ -2938,10 +2866,6 @@ Toast.prototype = {
 if (localStorage.getItem('car_collect') == null) {
   localStorage.setItem('car_collect', '[0]');
 }
-if (localStorage.getItem('song_collect') == null) {
-  localStorage.setItem('song_collect', '[0]');
-}
-
 var toast = new Toast();
 var shop = new Shop();
 shop.carSelect();
@@ -3014,78 +2938,8 @@ function sendNotification(title, options) {
   }
 }
 
-function check_song_shop() {
-  if (music_play) {
-    music_play.stop();
-  }
-  if (typeof music == 'undefined') {
-    setTimeout(function () {
-      music_play = music.play();
-      music_play.sourceNode.loop = true;
-      music.gameSounds.lineOut.volume  = 0.1;
-    }, 4000);
-  }else {
-    music_play = music.play();
-    music_play.sourceNode.loop = true;
-    music.gameSounds.lineOut.volume  = 0.1;
-  }
-}
-
-function toggleLight() {
-  tap.play()
-if (light == 0) {
-  $('.wall-bg').css('filter', 'sepia(.2) brightness(1.7)');
-  $('.floor-bg').css('filter', 'sepia(.2) brightness(2.7)');
-  $('.tv-desk-top').css('filter', 'sepia(.2) brightness(2.7)');
-  $('.tv-desk-shadow').css('filter', 'sepia(.2) brightness(2.7)');
-  $('.timer-shadow').css('opacity', '.2');
-
-  $('.toggle-desk-front').css('transform', 'skew(10deg)');
-  $('.toggle-desk-front').css('left', '102px');
-  $('.toggle-desk-shadow').hide();
-  $('.toggle-desk-bottom').hide();
-  light = 1;
-}else {
-  $('.wall-bg').css('filter', 'sepia(0) brightness(1)');
-  $('.floor-bg').css('filter', 'sepia(0) brightness(1)');
-  $('.tv-desk-top').css('filter', 'sepia(0) brightness(1)');
-  $('.tv-desk-shadow').css('filter', 'sepia(0) brightness(1)');
-  $('.timer-shadow').css('opacity', '1');
-
-  $('.toggle-desk-front').css('transform', 'skew(-10deg)');
-  $('.toggle-desk-front').css('left', '104px');
-  $('.toggle-desk-shadow').show();
-  $('.toggle-desk-bottom').show();
-
-  light = 0;
-}
 
 
-}
+// sendNotification()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//----------------------------------------
+//---------
